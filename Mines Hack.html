@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mines Spribe Hack</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background: url('A_futuristic_blue-toned_background_inspired_by_the.png') no-repeat center center;
+            background-size: cover;
+            font-family: Arial, sans-serif;
+            position: relative;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 5px;
+        }
+        .title {
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+            text-align: center;
+        }
+        .styled-select {
+            padding: 10px 20px;
+            font-size: 18px;
+            font-weight: bold;
+            color: white;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s;
+        }
+        .styled-select:hover {
+            background-color: #45a049;
+            transform: scale(1.1);
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(5, 60px);
+            grid-template-rows: repeat(5, 47px);
+            gap: 8px;
+            width: 340px;
+            height: 285px;
+            background-color: #004bb5;
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            margin-top: 5px;
+        }
+        .cell {
+            width: 60px;
+            height: 47px;
+            background: url('closed_cell.png') no-repeat center center;
+            background-size: cover;
+            transition: transform 0.2s ease, opacity 0.5s ease-in-out;
+            border-radius: 5px;
+        }
+        .cell:hover {
+            transform: scale(1.1);
+        }
+        .bomb, .revealed {
+            opacity: 0;
+            animation: fadeInScale 0.5s ease-in-out forwards;
+        }
+        .bomb {
+            background: url('bomb.png') no-repeat center center !important;
+            background-size: cover !important;
+        }
+        .revealed {
+            background: url('yellow_star.png') no-repeat center center !important;
+            background-size: cover !important;
+        }
+        @keyframes fadeInScale {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        .signal-button {
+            margin-top: 10px;
+            padding: 15px 40px;
+            font-size: 18px;
+            font-weight: bold;
+            color: white;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s;
+        }
+        .signal-button:hover {
+            background-color: #45a049;
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <select id="bombCount" class="styled-select" onchange="generateGrid(true)">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+            <option value="11">11</option>
+            <option value="12">12</option>
+            <option value="13">13</option>
+            <option value="14">14</option>
+            <option value="15">15</option>
+            <option value="16">16</option>
+            <option value="17">17</option>
+            <option value="18">18</option>
+            <option value="19">19</option>
+            <option value="20">20</option>
+        </select>
+        <div class="title">MinesAIHackV.2.0</div>
+    </div>
+    <div class="grid" id="gameBoard"></div>
+    <button class="signal-button" onclick="revealBombs()">Get Signal</button>
+    <script>
+        const grid = document.getElementById("gameBoard");
+        let bombPositions = [];
+        
+        function generateGrid(reset = true) {
+            grid.innerHTML = "";
+            bombPositions = [];
+            let bombCount = parseInt(document.getElementById("bombCount").value);
+            let availableCells = Array.from({ length: 25 }, (_, i) => i);
+            
+            for (let i = 0; i < bombCount; i++) {
+                let randomIndex = Math.floor(Math.random() * availableCells.length);
+                bombPositions.push(availableCells[randomIndex]);
+                availableCells.splice(randomIndex, 1);
+            }
+            
+            for (let i = 0; i < 25; i++) {
+                let cell = document.createElement("div");
+                cell.classList.add("cell");
+                cell.dataset.index = i;
+                grid.appendChild(cell);
+            }
+        }
+        
+        function revealBombs() {
+            document.querySelectorAll(".cell").forEach((cell, index) => {
+                setTimeout(() => {
+                    cell.classList.remove("bomb", "revealed");
+                    if (bombPositions.includes(index)) {
+                        cell.classList.add("bomb");
+                    } else {
+                        cell.classList.add("revealed");
+                    }
+                }, index * 50);
+            });
+        }
+        
+        window.onload = () => generateGrid(true);
+    </script>
+</body>
+</html>
